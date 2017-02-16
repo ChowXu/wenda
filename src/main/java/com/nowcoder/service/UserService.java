@@ -50,7 +50,7 @@ public class UserService {
         user.setSalt(UUID.randomUUID().toString().substring(0, 5));
         String head = String.format("http://images.nowcoder.com/head/%dt.png", new Random().nextInt(1000));
         user.setHeadUrl(head);
-        user.setPassword(WendaUtil.MD5(password+user.getSalt()));
+        user.setPassword(WendaUtil.MD5(password + user.getSalt()));
         userDAO.addUser(user);
 
         // 登陆
@@ -79,7 +79,7 @@ public class UserService {
             return map;
         }
 
-        if (!WendaUtil.MD5(password+user.getSalt()).equals(user.getPassword())) {
+        if (!WendaUtil.MD5(password + user.getSalt()).equals(user.getPassword())) {
             map.put("msg", "密码不正确");
             return map;
         }
@@ -89,11 +89,11 @@ public class UserService {
         return map;
     }
 
-    private String  addLoginTicket(int userId) {
+    private String addLoginTicket(int userId) {
         LoginTicket ticket = new LoginTicket();
         ticket.setUserId(userId);
         Date date = new Date();
-        date.setTime(date.getTime() + 1000*3600*24);
+        date.setTime(date.getTime() + 1000 * 3600 * 24);
         ticket.setExpired(date);
         ticket.setStatus(0);
         ticket.setTicket(UUID.randomUUID().toString().replaceAll("-", ""));
@@ -103,6 +103,10 @@ public class UserService {
 
     public User getUser(int id) {
         return userDAO.selectById(id);
+    }
+
+    public User selectByName(String name) {
+        return userDAO.selectByName(name);
     }
 
     public void logout(String ticket) {

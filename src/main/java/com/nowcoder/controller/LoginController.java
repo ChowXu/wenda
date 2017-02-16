@@ -55,6 +55,7 @@ public class LoginController {
         }
     }
 
+    //保存 之前的地址
     @RequestMapping(path = {"/reglogin"}, method = {RequestMethod.GET})
     public String regloginPage(Model model, @RequestParam(value = "next", required = false) String next) {
         model.addAttribute("next", next);
